@@ -1,6 +1,10 @@
 var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
+// my requires
+var dotenv = require('dotenv').config();
+var knex = require('./db-config').knex
+var db = require('./db')(knex)
 
 
 // Configure the Facebook strategy for use by Passport.
@@ -77,7 +81,7 @@ app.get('/login',
 app.get('/login/facebook',
   passport.authenticate('facebook'));
 
-app.get('/login/facebook/return', 
+app.get('/login/facebook/return',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
